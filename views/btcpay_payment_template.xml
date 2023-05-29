@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="btcpay_inline_form">
+                <div class="col mt-0 mb-0">
+                    <label for="customer_input" class="mt-0">
+                        <small><b>Payment Details (test data)</b></small>
+                    </label>
+                    <input type="text"
+                           name="customer_input"
+                           id="customer_input"
+                           class="form-control"
+                           placeholder="XXXX XXXX XXXX XXXX"/>
+                </div>
+    </template>
+
+
+</odoo>

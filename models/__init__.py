@@ -1,0 +1,1 @@
+from . import btcpay_payment_provider
