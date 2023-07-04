@@ -11,13 +11,11 @@
 
 
     <template id="redirect_form">
-        <form action="https://testnet.demo.btcpayserver.org/i/7HfD12aZyAMZZ3WFJHfVjE" method="get">
-            <input type="hidden" name="ReturnUrl" t-att-value="return_url"/>
-            <input type="hidden" name="returnURL" t-att-value="return_url"/>
-            <input type="hidden" name="return_url" t-att-value="return_url"/>
-            <input type="hidden" name="reference" t-att-value="reference"/>
-            <input type="hidden" name="RedirectUrl" t-att-value="return_url"/>
-            <input type="hidden" name="redirectURL" t-att-value="return_url"/>
+        <form action="/payment/btcpay/createInvoice" method="post">
+            <input type="hidden" name="ref" t-att-value="reference"/>
+            <input type="hidden" name="ret_url" t-att-value="return_url"/>
+            <input type="hidden" name="amount" t-att-value="amount"/>
+            <input type="hidden" name="currency" t-att-value="currency_code"/>
         </form>
     </template>
 

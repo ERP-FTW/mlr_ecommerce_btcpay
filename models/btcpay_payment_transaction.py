@@ -34,11 +34,10 @@ class PaymentTransaction(models.Model):
             return res
 
         base_url = self.provider_id.get_base_url()
-        _logger.info('base url is')
-        _logger.info(base_url)
         return {
             'reference': self.reference,
-            'return_url': 'https://www.google.com' ,
+            'amount': self.amount,
+            'currency_code': self.currency_id.name,
         }
 
     def action_get_conversion_rate(self):
