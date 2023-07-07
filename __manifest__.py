@@ -7,10 +7,10 @@
     "version": "1.0",
     "depends": ["website"],
     "data": [
+        "views/btcpay_payment_template.xml",
         "data/btcpay_payment_provider_data.xml",
         "data/btcpay_payment_icons.xml",
         "views/btcpay_payment_provider.xml",
-        "views/btcpay_payment_template.xml",
     ],
     "installable": True,
     "application": False,

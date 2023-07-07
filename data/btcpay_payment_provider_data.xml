@@ -7,5 +7,6 @@
         <field name="image_128" type="base64" file="mlr_ecommerce_btcpay/static/description/icon.png"/>
         <field name="display_as">BTCpay powered by MI Lightning Rod</field>
         <field name="inline_form_view_id" ref="btcpay_inline_form"/>
+        <field name="redirect_form_view_id" ref="redirect_form"/>
     </record>
 </odoo>
