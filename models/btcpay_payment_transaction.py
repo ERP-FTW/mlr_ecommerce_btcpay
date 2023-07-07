@@ -15,7 +15,7 @@ class PaymentTransaction(models.Model):
 
     btcpay_invoice_id = fields.Char('BTCPay Invoice ID')
     btcpay_conversion_rate = fields.Float('Conversion rate')
-    btcpay_invoiced_sat_amount = fields.Float('Invoiced Satoshi Amount', digits=(12, 4))
+    btcpay_invoiced_sat_amount = fields.Float('Invoiced Satoshi Amount', digits=(12, 8))
     btcpay_payment_link = fields.Char('BTCPay Payment Link')
     btcpay_payment_link_qr_code = fields.Binary('QR Code', compute="_generate_qr")
 

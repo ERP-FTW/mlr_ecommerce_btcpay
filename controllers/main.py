@@ -47,9 +47,16 @@ class CustomController(Controller):
             _logger.info(f"api respnse from return is {apiRes.json()}")
             resJson=apiRes.json()
             if resJson[0]['status'] == "Settled":
+                apiInvDet=self.btcpayApiCall({},'/api/v1/stores/{store_id}/invoices/'+resJson[0]['id']+'/payment-methods','GET')
+                if apiInvDet.status_code == 200:
+                   invDet=apiInvDet.json()
+                   rate=float(invDet[1]['rate'])
+                   sats=float(invDet[1]['amount'])
                 trn.write({
                     'btcpay_invoice_id':resJson[0]['id'],
                     'btcpay_payment_link':resJson[0]['checkoutLink'],
+                    'btcpay_conversion_rate': rate,
+                    'btcpay_invoiced_sat_amount': sats,
                 })
                 trn._set_done() 
             else:
