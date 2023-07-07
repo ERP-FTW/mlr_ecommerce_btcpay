@@ -18,7 +18,7 @@ class CustomController(Controller):
 
 
     def btcpayApiCall(self,payload,api,method):
-        btcpay_details = request.env['payment.provider'].search([('code', '=', 'btcpay')])
+        btcpay_details = request.env['payment.provider'].sudo().search([('code', '=', 'btcpay')])
         base_url = btcpay_details.mapped('btcpay_server_url')[0]
         store_id = btcpay_details.mapped('btcpay_store_id')[0]
         api_key = btcpay_details.mapped('btcpay_api_key')[0]
@@ -40,21 +40,22 @@ class CustomController(Controller):
 
     @route(_return_url, type='http', auth='public', methods=['GET','POST'], csrf=False)
     def custom_process_transaction(self, **post):
-        _logger.info("Handling custom processing with data:\n%s", pprint.pformat(post))
-        _logger.info("Self :\n%s", pprint.pformat(post))
-        _logger.info("Requet :\n%s", pprint.pformat(request))
-        _logger.info("Requet :\n%s", pprint.pformat(request.env))
-#        request.env['payment.transaction'].sudo()._handle_notification_data('btcpay', post)
-        trn = request.env['payment.transaction'].search([('reference', '=', post['ref']), ('provider_code', '=', 'btcpay')])
+        trn = request.env['payment.transaction'].sudo().search([('reference', '=', post['ref']), ('provider_code', '=', 'btcpay')])
         apiRes=self.btcpayApiCall({},'/api/v1/stores/{store_id}/invoices?textsearch='+post['ref'],'GET')
-        _logger.info(f"api respnse from return is {apiRes.json()}")
-        resJson=apiRes.json()
-        if resJson[0]['status'] == "Settled":
-            trn.write({
-                'btcpay_invoice_id':resJson[0]['id'],
-                'btcpay_payment_link':resJson[0]['checkoutLink'],
-            })
-            trn._set_done() 
+
+        if apiRes.status_code == 200:
+            _logger.info(f"api respnse from return is {apiRes.json()}")
+            resJson=apiRes.json()
+            if resJson[0]['status'] == "Settled":
+                trn.write({
+                    'btcpay_invoice_id':resJson[0]['id'],
+                    'btcpay_payment_link':resJson[0]['checkoutLink'],
+                })
+                trn._set_done() 
+            else:
+                trn._set_error(f"Payment failed!, BTCPay Invoice status: {resJson[0]['status']}")
+        else:
+            trn._set_error("Issue while creating BTCPay invoice, retry after sometime, if issue persits, please contact support or write to us")
 
         return request.redirect('/payment/status')
 
@@ -66,7 +67,7 @@ class CustomController(Controller):
     
         checkout = {
             "redirectURL": f"http://localhost:8069/payment/btcpay/return?ref={post['ref']}",
-            "paymentMethods": ["BTC-LightningNetwork"]
+            "paymentMethods": ["BTC","BTC-LightningNetwork"]
         }
     
         payload = {
@@ -80,6 +81,13 @@ class CustomController(Controller):
         _logger.info(json.dumps(payload))
     
         apiRes = self.btcpayApiCall(payload, '/api/v1/stores/{store_id}/invoices', 'POST')
+        _logger.info(f"response from api call {apiRes.json()}")
 
-        return request.redirect(apiRes.json()['checkoutLink'],local=False)
+        if apiRes.status_code == 200:
+            return request.redirect(apiRes.json()['checkoutLink'],local=False)
+        else:
+            trn = request.env['payment.transaction'].sudo().search([('reference', '=', post['ref']), ('provider_code', '=', 'btcpay')])
+            trn._set_error("Issue while creating BTCPay invoice, retry after sometime, if issue persits, please contact support or write to us")
+            return request.redirect('/payment/status')
+
 
