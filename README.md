@@ -18,7 +18,8 @@ Installation (see this video for tutorial on Odoo module installation)
 Setup
 
 1. In Odoo navigate to Website-> Ecommerce -> Payment Providers.
-2. Click Open to create a new record.
+   ![image](https://github.com/ERP-FTW/mlr_ecommerce_btcpay/assets/124227412/905b7ae1-6eb8-48ca-8edb-5205dff00f87)
+3. Click on BTCpay server open the record.
 4. Enter a Name for the Instance and Company Name to display on the receipt. Enter the expiration 
 5. Login into the BTCpay server to be used and navigate to Account -> API Key. Create a key with full priviledges.
 6. From BTCpay server copy the following information and paste in the Odoo BTCpay server Instance record: the server base URL, API key, and enter the password to BTCpay server.
@@ -28,8 +29,9 @@ Setup
    
 
 Operation
-1. From the Point of Sale Dashboard open a New Session.
-2. After creating an order click Create Invoice to generate Lightning Invoice. The generated invoice ID from BTCpay server will appear on a popup, acknowledge by clicking Ok.
-4. To view the invoice QR code click Bill. The QR code can be presented to the customer on the screen or with a printed receipt.
-6. From the order navigate to the Payment screen. If the the customer paid with Lightning click Validate to confirm and close the order, if the invoice is unpaid a message will alert the user and an alternative payment method can be used. If the customer wishes to use another payment method, exe out the BTCpay server payment line and use the other payment method.
-8. Lightning payment information, satoshi amount and conversion rate, will be stored on the payment model. To view after closing the session navigate to Orders-> Payments and open a specific record.
+1. A customer will navigate to the Shop section of the website and add items to the cart. After initiating the checkout and filling in customer information the available payment methods will be displayed.
+2. The customer can select the Bitcoin Lightning option and directions will appear below.
+3. After clicking Pay Now  the customer will be taken to a BTCpay server page with the invoice and QR code to be paid.
+4. The customer scans the QR code or pastes the invoice text as a send from their lightning wallet.
+6. Upon BTCpay server confirmation of the order the customer can click Return or be returned automatically to the Odoo site depending on BTCpay server settings.
+7. Odoo will process the order and create a sales order for fulfillment.
