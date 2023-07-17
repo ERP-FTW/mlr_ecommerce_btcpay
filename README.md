@@ -2,7 +2,7 @@
 Lightning Rod Ecommcerce BTCpay Readme
 
 Overview
-This custom module for Odoo 16+ adds BTCpay server as a payment provider to the Ecommerce application. A BTCpay server connected to a lightning node is queried by API calls from Odoo. BTCpay server API access is provided to Odoo and a Bitcoin Lightning option is added to the customer checkout. If the Bitcoin payment option is selected by a cutomer, they are forwarded to a BTCpay site with a created invoice and QR code for scanning by customers. After the payment is confirmed the customer can be redirected back to the Odoo online store receipt page and the order is registered and queued.
+This custom module for Odoo 16+ adds BTCpay server as a payment provider to the Ecommerce application. A BTCpay server connected to a lightning node is queried by API calls from Odoo. BTCpay server API access is provided to Odoo and a Bitcoin Lightning option is added to the customer checkout. If the Bitcoin payment option is selected by a customer, they are forwarded to a BTCpay site with a created invoice and QR code for payment. After the payment is confirmed the customer can be redirected back to the Odoo online store receipt page and the order is registered and queued.
 
 Prerequisites (versions)
 Compatible with Odoo 16
