@@ -71,9 +71,9 @@ class CustomController(Controller):
     def create_invoice(self, **post):
         _logger.info("Inside create_invoice")
         _logger.info(post)
-    
+        web_base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
         checkout = {
-            "redirectURL": f"http://localhost:8069/payment/btcpay/return?ref={post['ref']}",
+            "redirectURL": f"{web_base_url}/payment/btcpay/return?ref={post['ref']}",
             "paymentMethods": ["BTC","BTC-LightningNetwork"]
         }
     
