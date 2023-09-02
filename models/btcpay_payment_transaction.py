@@ -91,4 +91,3 @@ class PaymentTransaction(models.Model):
             return result
         except Exception as e:
             raise UserError(_("Create BTCPay Invoice: %s", e.args))
-

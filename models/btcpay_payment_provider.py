@@ -29,8 +29,9 @@ class PaymentProvider(models.Model):
 
     def test_btcpay_server_connection(self):
         try:
-            server_url = self.btcpay_server_url + "/api/v1/api-keys/current"
-            headers = {"Authorization": "Token %s" % (self.btcpay_api_key)}
+            server_url = self.btcpay_server_url + "/api/v1/status"
+            headers = {"Authorization": "Bearer %s" % (self.btcpay_api_key), "Content-Type": "application/json",
+                       "Accept": "application/json"}
             response = requests.request(method="GET", url=server_url, headers=headers)
             is_success = True if response.status_code == 200 else False
             return is_success
